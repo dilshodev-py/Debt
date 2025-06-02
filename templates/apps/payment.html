@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To'lovlar - Qarz Boshqaruvi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-input, .filter-select {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .payments-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .payments-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            font-weight: bold;
+        }
+
+        .payments-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .payments-table th,
+        .payments-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .payments-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .payments-table tr:hover {
+            background: #f8f9ff;
+        }
+
+        .payment-amount {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .payment-date {
+            color: #666;
+        }
+
+        .payment-note {
+            font-style: italic;
+            color: #666;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-input {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .payments-table {
+                font-size: 0.9rem;
+            }
+
+            .payments-table th,
+            .payments-table td {
+                padding: 10px 8px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .export-btn {
+            background: #17a2b8;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .export-btn:hover {
+            background: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'home' %}" class="back-btn">← Bosh sahifaga qaytish</a>
+
+        <header>
+            <h1>💳 To'lovlar Tarixi</h1>
+        </header>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value" id="totalPayments">0 so'm</div>
+                <div class="stat-label">Jami to'lovlar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="thisMonthPayments">0 so'm</div>
+                <div class="stat-label">Bu oy to'lovlari</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="paymentCount">0</div>
+                <div class="stat-label">To'lovlar soni</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input type="text" class="search-input" id="searchInput" placeholder="To'lovchi ismini qidiring...">
+            <select class="filter-select" id="monthFilter">
+                <option value="all">Barcha oylar</option>
+            </select>
+            <button class="export-btn" onclick="exportPayments()">📊 Eksport</button>
+        </div>
+
+        <div class="payments-container">
+            <div class="payments-header">
+                <h3>💰 To'lovlar Ro'yxati</h3>
+            </div>
+
+            <div id="paymentsTableContainer">
+                <table class="payments-table" id="paymentsTable">
+                    <thead>
+                        <tr>
+                            <th>To'lovchi</th>
+                            <th>Miqdor</th>
+                            <th>Sana</th>
+                            <th>Izoh</th>
+                            <th>Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentsTableBody">
+                        <!-- To'lovlar bu yerda ko'rsatiladi -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">💳</div>
+                <h3>Hozircha to'lovlar yo'q</h3>
+                <p>To'lovlar avtomatik ravishda bu yerda ko'rsatiladi</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- O'chirish tasdiqi modali -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🗑️ To'lovni O'chirish</h3>
+                <p>Haqiqatan ham bu to'lovni o'chirmoqchimisiz?</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-danger" onclick="confirmDelete()">O'chirish</button>
+                <button class="btn btn-secondary" onclick="closeModal()">Bekor qilish</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let payments = JSON.parse(localStorage.getItem('payments')) || [];
+        let debts = JSON.parse(localStorage.getItem('debts')) || [];
+        let currentPaymentId = null;
+
+        window.onload = function() {
+            displayPayments();
+            updateStats();
+            populateMonthFilter();
+            setupEventListeners();
+        };
+
+        function setupEventListeners() {
+            document.getElementById('searchInput').addEventListener('input', filterPayments);
+            document.getElementById('monthFilter').addEventListener('change', filterPayments);
+        }
+
+        function displayPayments(paymentsToShow = payments) {
+            const tableContainer = document.getElementById('paymentsTableContainer');
+            const emptyState = document.getElementById('emptyState');
+            const tableBody = document.getElementById('paymentsTableBody');
+
+            if (paymentsToShow.length === 0) {
+                tableContainer.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            tableContainer.style.display = 'block';
+            emptyState.style.display = 'none';
+
+            // To'lovlarni sanasi bo'yicha tartiblash (eng yangi birinchi)
+            const sortedPayments = [...paymentsToShow].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            tableBody.innerHTML = sortedPayments.map(payment => {
+                const debt = debts.find(d => d.id === payment.debtId);
+                const debtorName = debt ? debt.debtor : payment.payer || 'Noma\'lum';
+
+                return `
+                    <tr>
+                        <td>
+                            <strong>${debtorName}</strong>
+                            ${debt ? `<br><small style="color: #666;">Qarz ID: ${debt.id}</small>` : ''}
+                        </td>
+                        <td class="payment-amount">${formatMoney(payment.amount)}</td>
+                        <td class="payment-date">${formatDate(payment.date)}</td>
+                        <td class="payment-note" title="${payment.note || 'Izoh yo\'q'}">
+                            ${payment.note || '-'}
+                        </td>
+                        <td>
+                            <button class="btn-delete" onclick="openDeleteModal(${payment.id})">
+                                🗑️ O'chirish
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterPayments() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const monthFilter = document.getElementById('monthFilter').value;
+
+            let filteredPayments = payments.filter(payment => {
+                const debt = debts.find(d => d.id === payment.debtId);
+                const debtorName = debt ? debt.debtor : payment.payer || '';
+                const matchesSearch = debtorName.toLowerCase().includes(searchTerm);
+
+                let matchesMonth = true;
+                if (monthFilter !== 'all') {
+                    const paymentDate = new Date(payment.date);
+                    const filterDate = new Date(monthFilter);
+                    matchesMonth = paymentDate.getFullYear() === filterDate.getFullYear() &&
+                                 paymentDate.getMonth() === filterDate.getMonth();
+                }
+
+                return matchesSearch && matchesMonth;
+            });
+
+            displayPayments(filteredPayments);
+        }
+
+        function updateStats() {
+            const totalAmount = payments.reduce((sum, payment) => sum + payment.amount, 0);
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+
+            const thisMonthAmount = payments
+                .filter(payment => {
+                    const paymentDate = new Date(payment.date);
+                    return paymentDate.getMonth() === currentMonth &&
+                           paymentDate.getFullYear() === currentYear;
+                })
+                .reduce((sum, payment) => sum + payment.amount, 0);
+
+            document.getElementById('totalPayments').textContent = formatMoney(totalAmount);
+            document.getElementById('thisMonthPayments').textContent = formatMoney(thisMonthAmount);
+            document.getElementById('paymentCount').textContent = payments.length;
+        }
+
+        function populateMonthFilter() {
+            const monthFilter = document.getElementById('monthFilter');
+            const months = new Set();
+
+            payments.forEach(payment => {
+                const date = new Date(payment.date);
+                const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
+                months.add(monthKey);
+            });
+
+            const sortedMonths = Array.from(months).sort().reverse();
+
+            sortedMonths.forEach(monthKey => {
+                const [year, month] = monthKey.split('-');
+                const date = new Date(year, month);
+                const monthName = date.toLocaleDateString('uz-UZ', {
+                    year: 'numeric',
+                    month: 'long'
+                });
+
+                const option = document.createElement('option');
+                option.value = `${year}-${month.padStart(2, '0')}-01`;
+                option.textContent = monthName;
+                monthFilter.appendChild(option);
+            });
+        }
+
+        function formatMoney(amount) {
+            return new Intl.NumberFormat('uz-UZ').format(amount) + ' so\'m';
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('uz-UZ');
+        }
+
+        function openDeleteModal(paymentId) {
+            currentPaymentId = paymentId;
+            document.getElementById('deleteModal').style.display = 'block';
+        }
+
+        function confirmDelete() {
+            payments = payments.filter(payment => payment.id !== currentPaymentId);
+            localStorage.setItem('payments', JSON.stringify(payments));
+
+            closeModal();
+            displayPayments();
+            updateStats();
+            filterPayments();
+        }
+    </script>

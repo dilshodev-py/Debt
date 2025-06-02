@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Select Tag Examples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: #4a5568;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .example {
+            margin: 25px 0;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+        }
+
+        .example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .example h3 {
+            color: #2d3748;
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+
+        select {
+            padding: 10px 15px;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        select:hover {
+            border-color: #a0aec0;
+        }
+
+        .styled-select {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        .styled-select option {
+            background: white;
+            color: #333;
+            padding: 10px;
+        }
+
+        .large-select {
+            font-size: 18px;
+            padding: 15px 20px;
+            min-width: 300px;
+        }
+
+        .multiple-select {
+            height: 120px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        .code {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+
+        .demo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .result {
+            padding: 10px;
+            background: #e6fffa;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #2d3748;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>HTML Select Tag Examples</h1>
+
+    <div class="example">
+        <h3>1. Basic Select Dropdown</h3>
+        <div class="demo-section">
+            <div>
+                <label for="fruits">Choose a fruit:</label>
+                <select id="fruits" name="fruits">
+                    <option value="">--Please choose an option--</option>
+                    <option value="apple">Apple</option>
+                    <option value="banana">Banana</option>
+                    <option value="orange">Orange</option>
+                    <option value="grape">Grape</option>
+                </select>
+            </div>
+        </div>
+        <div class="code">
+            &lt;select id="fruits" name="fruits"&gt;
+            &lt;option value=""&gt;--Please choose an option--&lt;/option&gt;
+            &lt;option value="apple"&gt;Apple&lt;/option&gt;
+            &lt;option value="banana"&gt;Banana&lt;/option&gt;
+            &lt;option value="orange"&gt;Orange&lt;/option&gt;
+            &lt;/select&gt;
+        </div>
+    </div>
+
+    <div class="example">
+        <h3>2. Select with Preselected Option</h3>
+        <div class="demo-section">
+            <div>
+                <label for="countries">Select Country:</label>
+                <select id="countries" name="countries">
+                    <option value="us">United States</option>
+                    <option value="uk" selected>United Kingdom</option>
+                    <option value="ca">Canada</option>
+                    <option value="au">Australia</option>
+                </select>
+            </div>
+        </div>
+        <div class="code">
+            &lt;select id="countries" name="countries"&gt;
+            &lt;option value="us"&gt;United States&lt;/option&gt;
+            &lt;option value="uk" selected&gt;United Kingdom&lt;/option&gt;
+            &lt;option value="ca"&gt;Canada&lt;/option&gt;
+            &lt;/select&gt;
+        </div>
+    </div>
+
+    <div class="example">
+        <h3>3. Multiple Selection</h3>
+        <div class="demo-section">
+            <div>
+                <label for="colors">Choose colors (hold Ctrl/Cmd):</label>
+                <select id="colors" name="colors" multiple class="multiple-select">
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="purple">Purple</option>
+                    <option value="orange">Orange</option>
+                </select>
+            </div>
+        </div>
+        <div class="code">
+            &lt;select id="colors" name="colors" multiple&gt;
+            &lt;option value="red"&gt;Red&lt;/option&gt;
+            &lt;option value="blue"&gt;Blue&lt;/option&gt;
+            &lt;option value="green"&gt;Green&lt;/option&gt;
+            &lt;/select&gt;
+        </div>
+    </div>
+
+    <div class="example">
+        <h3>4. Grouped Options (Optgroup)</h3>
+        <div class="demo-section">
+            <div>
+                <label for="vehicles">Choose a vehicle:</label>
+                <select id="vehicles" name="vehicles">
+                    <optgroup label="Cars">
+                        <option value="sedan">Sedan</option>
+                        <option value="suv">SUV</option>
+                        <option value="hatchback">Hatchback</option>
+                    </optgroup>
+                    <optgroup label="Motorcycles">
+                        <option value="sport">Sport Bike</option>
+                        <option value="cruiser">Cruiser</option>
+                        <option value="touring">Touring</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+        <div class="code">
+            &lt;select id="vehicles" name="vehicles"&gt;
+            &lt;optgroup label="Cars"&gt;
+            &lt;option value="sedan"&gt;Sedan&lt;/option&gt;
+            &lt;option value="suv"&gt;SUV&lt;/option&gt;
+            &lt;/optgroup&gt;
+            &lt;optgroup label="Motorcycles"&gt;
+            &lt;option value="sport"&gt;Sport Bike&lt;/option&gt;
+            &lt;/optgroup&gt;
+            &lt;/select&gt;
+        </div>
+    </div>
+
+    <div class="example">
+        <h3>5. Styled Select</h3>
+        <div class="demo-section">
+            <div>
+                <label for="priority">Priority Level:</label>
+                <select id="priority" name="priority" class="styled-select">
+                    <option value="low">Low Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="high">High Priority</option>
+                    <option value="urgent">Urgent</option>
+                </select>
+            </div>
+        </div>
+        <div class="code">
+            &lt;select class="styled-select"&gt;
+            &lt;option value="low"&gt;Low Priority&lt;/option&gt;
+            &lt;option value="medium"&gt;Medium Priority&lt;/option&gt;
+            &lt;option value="high"&gt;High Priority&lt;/option&gt;
+            &lt;/select&gt;
+        </div>
+    </div>
+
+    <div class="example">
+        <h3>6. Large Select with Size Attribute</h3>
+        <div class="demo-section">
+            <div>
+                <label for="numbers">Pick numbers:</label>
+                <select id="numbers" name="numbers" size="4" class="large-select">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    <option value="4">Four</option>
+                    <option value="5">Five</option>
+                    <option value="6">Six</option>
+                    <option value="7">Seven</option>
+                </select>
+            </div>
+        </div>
+        <div class="code">
+            &lt;select id="numbers" name="numbers" size="4"&gt;
+            &lt;option value="1"&gt;One&lt;/option&gt;
+            &lt;option value="2"&gt;Two&lt;/option&gt;
+            &lt;option value="3"&gt;Three&lt;/option&gt;
+            &lt;/select&gt;
+        </div>
+    </div>
+
+    <div class="example">
+        <h3>7. Interactive Select with JavaScript</h3>
+        <div class="demo-section">
+            <div>
+                <label for="interactive">Choose and see result:</label>
+                <select id="interactive" name="interactive" onchange="showSelection()">
+                    <option value="">Select an option...</option>
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                </select>
+                <div id="selectionResult" class="result" style="display: none;"></div>
+            </div>
+        </div>
+        <div class="code">
+            &lt;select onchange="showSelection()"&gt;
+            &lt;option value="html"&gt;HTML&lt;/option&gt;
+            &lt;option value="css"&gt;CSS&lt;/option&gt;
+            &lt;/select&gt;
+
+            &lt;script&gt;
+            function showSelection() {
+            const select = document.getElementById('interactive');
+            const result = document.getElementById('selectionResult');
+            if (select.value) {
+            result.textContent = `You selected: ${select.value.toUpperCase()}`;
+            result.style.display = 'block';
+            } else {
+            result.style.display = 'none';
+            }
+            }
+            &lt;/script&gt;
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSelection() {
+        const select = document.getElementById('interactive');
+        const result = document.getElementById('selectionResult');
+        if (select.value) {
+            result.textContent = `You selected: ${select.value.toUpperCase()}`;
+            result.style.display = 'block';
+        } else {
+            result.style.display = 'none';
+        }
+    }
+</script>
+</body>
+</html>
